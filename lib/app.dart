@@ -8,14 +8,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData.light()
-            .copyWith(textTheme: GoogleFonts.notoSansTextTheme()),
+        theme: ThemeData.light().copyWith(
+            textTheme: GoogleFonts.notoSansTextTheme(),
+            primaryColor: Colors.lightBlue,
+            highlightColor: Colors.lightBlue),
         darkTheme: ThemeData.dark().copyWith(
             textTheme:
-                GoogleFonts.notoSansTextTheme(ThemeData.dark().textTheme)),
+                GoogleFonts.notoSansTextTheme(ThemeData.dark().textTheme),
+            primaryColor: Colors.lightBlue,
+            highlightColor: Colors.lightBlue),
         home: Scaffold(
           appBar: AppBar(
-            title: const Text('Roughly Scheduler'),
+            centerTitle: true,
+            title: const Text('Rough Scheduler'),
             actions: [
               IconButton(
                   onPressed: () {},
@@ -23,6 +28,12 @@ class App extends StatelessWidget {
                     (Icons.more_vert),
                   ))
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Colors.white,
+            child: const Icon(Icons.add),
           ),
           body: const Center(
             child: Todos(),

@@ -1,19 +1,110 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:jiffy/jiffy.dart';
 
 part 'todo.freezed.dart';
 
 @freezed
 class Todo with _$Todo {
+  // 空のコンストラクタ(feezedでgetterの定義に必要)
+  // ignore: unused_element
+  const Todo._();
+
   factory Todo({
     // id
     required String id,
     // タイトル
     required String title,
+    // メモ(任意)
+    String? memo,
     // todoを実行すべき日付
     required DateTime dateTodo,
-    // 予定を繰り返すか
-    required bool isRepeat,
     // アーカイブ済みか
     required bool isArchived,
   }) = _Todo;
+
+  // 期限のカテゴリを取得するgetter
+  DeadLine get deadLine {
+    // やるべき日付と現在時刻の差に応じた期限ラベルを取得する
+    final dateTodoJiffy = Jiffy(dateTodo);
+    final today = Jiffy(DateTime.now());
+
+    // 1,2,3,4週間以内
+    if (dateTodoJiffy.diff(today, Units.WEEK) <= 1) {
+      return DeadLine.withinAWeek;
+    }
+    if (dateTodoJiffy.diff(today, Units.WEEK) <= 2) {
+      return DeadLine.withinTwoWeeks;
+    }
+    if (dateTodoJiffy.diff(today, Units.WEEK) <= 3) {
+      return DeadLine.withinThreeWeeks;
+    }
+    if (dateTodoJiffy.diff(today, Units.WEEK) <= 4) {
+      return DeadLine.withinFourWeeks;
+    }
+
+    // 1ヶ月以上先
+    return DeadLine.overAMonthAhead;
+  }
 }
+
+// ignore: slash_for_doc_comments
+/**
+ * grouped_listのラベルに使う、期限のenum。
+ * 1週間以内、2週間以内、3週間以内、4週間以内、1ヶ月以上先の5つの期限を使用する
+ *
+ */
+enum DeadLine {
+  // 1週間以内
+  withinAWeek('1週間以内', 1),
+  // 2週間以内
+  withinTwoWeeks('2週間以内', 2),
+  // 3週間以内
+  withinThreeWeeks('3週間以内', 3),
+  // 4週間以内
+  withinFourWeeks('4週間以内', 4),
+  // 1ヶ月以上先
+  overAMonthAhead('1ヶ月以上先', 5);
+
+  final String label;
+  final int displayOrder;
+  const DeadLine(this.label, this.displayOrder);
+
+  // ラベル文字列からenum自体を逆引きする
+  static DeadLine getDeadLineByLabel(String label) {
+    return DeadLine.values.firstWhere((deadLine) => deadLine.label == label);
+  }
+}
+
+// テスト用データ
+final todos = [
+  Todo(
+      id: '1',
+      title: '電動歯ブラシのブラシ交換',
+      dateTodo: DateTime(2023, 1, 12),
+      isArchived: false),
+  Todo(
+      id: '2',
+      title: '歯医者(定期検診)',
+      dateTodo: DateTime(2023, 1, 24),
+      isArchived: false),
+  Todo(
+      id: '3',
+      title: '魚のフィルター交換',
+      dateTodo: DateTime(2023, 1, 27),
+      isArchived: false),
+  Todo(
+      id: '4',
+      title: '冷蔵庫の掃除',
+      dateTodo: DateTime(2023, 3, 16),
+      isArchived: false),
+  Todo(
+      id: '5',
+      title: 'PCのファンの掃除',
+      dateTodo: DateTime(2023, 1, 17),
+      isArchived: false),
+  Todo(
+      id: '6',
+      title: '電動シェーバーの刃交換',
+      dateTodo: DateTime(2023, 1, 7),
+      isArchived: false)
+];

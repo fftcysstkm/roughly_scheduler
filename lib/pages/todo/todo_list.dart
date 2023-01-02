@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:roughly_scheduler/model/data/todo/todo.dart';
 
 // ignore: slash_for_doc_comments
@@ -10,32 +11,37 @@ import 'package:roughly_scheduler/model/data/todo/todo.dart';
 class Todos extends StatelessWidget {
   const Todos({super.key});
 
-  static final todos = [
-    Todo(
-        id: '1',
-        title: '電動歯ブラシのブラシ交換',
-        dateTodo: DateTime(2023, 1, 12),
-        isRepeat: false,
-        isArchived: false),
-    Todo(
-        id: '2',
-        title: '歯医者(定期検診)',
-        dateTodo: DateTime(2023, 1, 20),
-        isRepeat: false,
-        isArchived: false),
-    Todo(
-        id: '3',
-        title: '魚のフィルター交換',
-        dateTodo: DateTime(2023, 2, 12),
-        isRepeat: false,
-        isArchived: false)
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: todos.length,
-      itemBuilder: (context, index) {
+    return GroupedListView<Todo, String>(
+      padding: const EdgeInsets.all(8.0),
+      elements: todos,
+      groupBy: (todo) => todo.deadLine.label,
+      groupComparator: (deadLineLabel1, deadLineLabel2) {
+        final deadLine1 = DeadLine.getDeadLineByLabel(deadLineLabel1);
+        final deadLine2 = DeadLine.getDeadLineByLabel(deadLineLabel2);
+        return deadLine1.displayOrder.compareTo(deadLine2.displayOrder);
+      },
+      floatingHeader: true,
+      groupSeparatorBuilder: (String label) => Padding(
+          padding: const EdgeInsets.only(
+              top: 12.0, bottom: 4.0, left: 140, right: 140),
+          child: Container(
+            height: 20,
+            width: 10,
+            decoration: BoxDecoration(
+                color: Theme.of(context).highlightColor,
+                borderRadius: BorderRadius.circular(8)),
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+          )),
+      itemBuilder: (context, todo) {
         return Slidable(
             key: const ValueKey(0),
             endActionPane: ActionPane(
@@ -66,7 +72,7 @@ class Todos extends StatelessWidget {
                 ),
               ],
             ),
-            child: _TodoCard(todo: todos[index]));
+            child: _TodoCard(todo: todo));
       },
     );
   }
@@ -85,7 +91,10 @@ class _TodoCard extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: const FlutterLogo(size: 56.0),
-        title: Text(todo.title),
+        title: Text(
+          todo.title,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
     );
   }

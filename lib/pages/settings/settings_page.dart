@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ArchivePage extends StatelessWidget {
-  const ArchivePage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
-  static const path = '/archive';
+  static const path = 'detail';
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,6 @@ class ArchivePage extends StatelessWidget {
           centerTitle: true,
           title: const Text('Rough Scheduler'),
         ),
-        body: const Center(child: Text('archive')));
+        body: Center(child: const Text('settings')));
   }
 }

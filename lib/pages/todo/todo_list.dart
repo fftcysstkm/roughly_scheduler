@@ -30,7 +30,7 @@ class Todos extends StatelessWidget {
             height: 20,
             width: 10,
             decoration: BoxDecoration(
-                color: Theme.of(context).highlightColor,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(8)),
             child: Text(
               label,
@@ -96,6 +96,7 @@ class _TodoCard extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
+      elevation: 4.0,
     );
   }
 }

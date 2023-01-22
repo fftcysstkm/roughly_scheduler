@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 const double _kItemExtent = 32.0;
 
 const _weeks = [
+  '0',
   '1',
   '2',
   '3',
@@ -24,6 +25,9 @@ class _ToDoDetailState extends State<ToDoDetail> {
   // 選択した週
   int _selectedFruit = 0;
 
+  // 繰り返すかのチェック状態
+  bool _checked = true;
+
   // メモ欄のコントローラー
   TextEditingController noteArea = TextEditingController();
 
@@ -35,8 +39,9 @@ class _ToDoDetailState extends State<ToDoDetail> {
           title: const Text('Rough Scheduler'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+          padding: const EdgeInsets.all(24.0),
+          child: SingleChildScrollView(
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('タイトル', style: Theme.of(context).textTheme.headline6),
@@ -48,63 +53,121 @@ class _ToDoDetailState extends State<ToDoDetail> {
                 )),
               ),
               const SizedBox(height: 8, child: Spacer()),
-              Text('通知', style: Theme.of(context).textTheme.headline6),
+              Text('お知らせ間隔', style: Theme.of(context).textTheme.headline6),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text('Selectd Fruit:'),
-                    OutlinedButton(
-                      onPressed: () => _showDialog(
-                        Row(
-                          children: [
-                            Expanded(
-                              child: CupertinoPicker(
-                                magnification: 1.22,
-                                squeeze: 1.2,
-                                useMagnifier: true,
-                                itemExtent: _kItemExtent,
-                                onSelectedItemChanged: (int selectedIndex) {
-                                  setState(() {
-                                    _selectedFruit = selectedIndex;
-                                  });
-                                },
-                                looping: true,
-                                children: List<Widget>.generate(_weeks.length,
-                                    (index) {
-                                  return Center(
-                                      child: Text('${_weeks[index]}ヶ月'));
-                                }),
+                    Expanded(
+                        child: SizedBox(
+                      height: 60,
+                      child: OutlinedButton(
+                          child: Row(
+                            children: [
+                              // お知らせ間隔のインプット
+                              Text(_weeks[_selectedFruit],
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.black)),
+                              const Text(' 年'),
+                              const Spacer(),
+                              Text(_weeks[_selectedFruit],
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.black)),
+                              const Text(' 月'),
+                              const Spacer(),
+                              Text(_weeks[_selectedFruit],
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.black)),
+                              const Text(' 週後'),
+                              const Spacer(
+                                flex: 6,
                               ),
-                            ),
-                            Expanded(
-                              child: CupertinoPicker(
-                                magnification: 1.22,
-                                squeeze: 1.2,
-                                useMagnifier: true,
-                                itemExtent: _kItemExtent,
-                                onSelectedItemChanged: (int selectedIndex) {
-                                  setState(() {
-                                    _selectedFruit = selectedIndex;
-                                  });
-                                },
-                                looping: true,
-                                children: List<Widget>.generate(_weeks.length,
-                                    (index) {
-                                  return Center(
-                                      child: Text('${_weeks[index]}週'));
-                                }),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      child: Text(_weeks[_selectedFruit]),
-                    )
+                            ],
+                          ),
+                          onPressed: () => _showDialog(
+                                Row(
+                                  children: [
+                                    // 年
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        magnification: 1.22,
+                                        squeeze: 1.2,
+                                        useMagnifier: true,
+                                        itemExtent: _kItemExtent,
+                                        onSelectedItemChanged:
+                                            (int selectedIndex) {
+                                          setState(() {
+                                            _selectedFruit = selectedIndex;
+                                          });
+                                        },
+                                        looping: true,
+                                        children: List<Widget>.generate(
+                                            _weeks.length, (index) {
+                                          return Center(
+                                              child: Text('${_weeks[index]}年'));
+                                        }),
+                                      ),
+                                    ),
+                                    // 月
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        magnification: 1.22,
+                                        squeeze: 1.2,
+                                        useMagnifier: true,
+                                        itemExtent: _kItemExtent,
+                                        onSelectedItemChanged:
+                                            (int selectedIndex) {
+                                          setState(() {
+                                            _selectedFruit = selectedIndex;
+                                          });
+                                        },
+                                        looping: true,
+                                        children: List<Widget>.generate(
+                                            _weeks.length, (index) {
+                                          return Center(
+                                              child:
+                                                  Text('${_weeks[index]}ヶ月'));
+                                        }),
+                                      ),
+                                    ),
+                                    // 週
+                                    Expanded(
+                                      child: CupertinoPicker(
+                                        magnification: 1.22,
+                                        squeeze: 1.2,
+                                        useMagnifier: true,
+                                        itemExtent: _kItemExtent,
+                                        onSelectedItemChanged:
+                                            (int selectedIndex) {
+                                          setState(() {
+                                            _selectedFruit = selectedIndex;
+                                          });
+                                        },
+                                        looping: true,
+                                        children: List<Widget>.generate(
+                                            _weeks.length, (index) {
+                                          return Center(
+                                              child: Text('${_weeks[index]}週'));
+                                        }),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                    ))
                   ],
                 ),
               ),
+              CheckboxListTile(
+                  title: const Text('繰り返す'),
+                  activeColor: Theme.of(context).primaryColor,
+                  value: _checked,
+                  onChanged: ((value) {
+                    setState(() {
+                      _checked = value!;
+                    });
+                  })),
               const SizedBox(height: 8, child: Spacer()),
               Text('メモ', style: Theme.of(context).textTheme.headline6),
               Padding(
@@ -116,9 +179,23 @@ class _ToDoDetailState extends State<ToDoDetail> {
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16, right: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(90, 50)),
+                        child:
+                            const Text('保存', style: TextStyle(fontSize: 16))),
+                  ],
+                ),
               )
             ],
-          ),
+          )),
         ));
   }
 

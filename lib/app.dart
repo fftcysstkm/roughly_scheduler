@@ -22,7 +22,7 @@ class App extends StatelessWidget {
             navigatorKey: _shellNavigatorKey,
             builder:
                 (BuildContext context, GoRouterState state, Widget child) =>
-                    ScafforldWithNavBar(child: child),
+                    ScaffoldWithNavBar(child: child),
             routes: [
               // Home画面(Bottom Nav Barの1つ目の画面)
               GoRoute(
@@ -65,8 +65,8 @@ class App extends StatelessWidget {
   }
 }
 
-class ScafforldWithNavBar extends StatelessWidget {
-  const ScafforldWithNavBar({super.key, required this.child});
+class ScaffoldWithNavBar extends StatelessWidget {
+  const ScaffoldWithNavBar({super.key, required this.child});
   // Scafold内に表示されるWidget
   final Widget child;
 

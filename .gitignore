@@ -134,3 +134,5 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 
+# 色
+# https://m2.material.io/resources/color/#!/?view.left=1&view.right=0&primary.color=0097A7&secondary.color=fcd734

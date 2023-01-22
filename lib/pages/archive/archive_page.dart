@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:roughly_scheduler/main.dart';
 
-class ArchivePage extends StatelessWidget {
+class ArchivePage extends ConsumerWidget {
   const ArchivePage({super.key});
 
   static const path = '/archive';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final str = ref.watch(testStrProvider);
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Rough Scheduler'),
         ),
-        body: const Center(child: Text('archive')));
+        body: Center(child: Text('archiveです。 $str')));
   }
 }

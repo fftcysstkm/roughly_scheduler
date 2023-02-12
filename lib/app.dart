@@ -27,7 +27,10 @@ class App extends StatelessWidget {
               // Home画面(Bottom Nav Barの1つ目の画面)
               GoRoute(
                   path: '/home',
-                  builder: (context, state) => const HomePage(),
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                        child: const HomePage(), key: state.pageKey);
+                  },
                   routes: [
                     // ToDo詳細画面（/home/detail)。ToDoの更新と追加画面。
                     GoRoute(
@@ -38,7 +41,10 @@ class App extends StatelessWidget {
               // アーカイブ画面(Bottom Nav Barの2つ目の画面)
               GoRoute(
                   path: '/archive',
-                  builder: (context, state) => const ArchivePage(),
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(
+                        child: const ArchivePage(), key: state.pageKey);
+                  },
                   routes: [
                     // ToDo詳細画面（/archive/detail）
                     GoRoute(
@@ -50,7 +56,10 @@ class App extends StatelessWidget {
               // 設定画面(Bottom Nav Barの3つ目の画面)
               GoRoute(
                 path: '/settings',
-                builder: (context, state) => const SettingsPage(),
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                      child: const SettingsPage(), key: state.pageKey);
+                },
               )
             ]),
       ]);

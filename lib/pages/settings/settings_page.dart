@@ -15,6 +15,7 @@ class SettingsPage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -23,7 +24,13 @@ class SettingsPage extends StatelessWidget {
                   Expanded(child: Container()),
                   const _Switch(),
                 ],
-              )
+              ),
+              const SizedBox(height: 8),
+              Text('ログアウト',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Colors.red))
             ],
           ),
         ));

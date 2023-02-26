@@ -14,6 +14,10 @@ class Todo with _$Todo {
     required String id,
     // タイトル
     required String title,
+    // お知らせ間隔
+    required NotificationDuration duration,
+    // お知らせを繰り返すかどうか
+    required bool isRepeated,
     // メモ(任意)
     String? memo,
     // todoを実行すべき日付
@@ -45,6 +49,49 @@ class Todo with _$Todo {
     // 1ヶ月以上先
     return DeadLine.overAMonthAhead;
   }
+
+  // 通知まであと何日かを取得する
+  int daysLeft() {
+    final dateTodoJiffy = Jiffy(dateTodo);
+    final today = Jiffy(DateTime.now());
+    return dateTodoJiffy.diff(today, Units.DAY).toInt();
+  }
+
+  // 通知間隔の文字列を取得するg
+  String durationString() {
+    final year = duration.year;
+    final month = duration.month;
+    final week = duration.week;
+
+    // 通知間隔の文字列を作成する
+    final durationString = StringBuffer();
+    if (year > 0) {
+      durationString.write('$year年');
+    }
+    if (month > 0) {
+      durationString.write('$monthヶ月');
+    }
+    if (week > 0) {
+      durationString.write('$week週');
+    }
+    return durationString.toString();
+  }
+}
+
+/**
+ * お知らせ間隔クラス
+ */
+class NotificationDuration {
+  // コンストラクタ
+  NotificationDuration({
+    required this.year,
+    required this.month,
+    required this.week,
+  });
+  // 年月日
+  final int year;
+  final int month;
+  final int week;
 }
 
 // ignore: slash_for_doc_comments
@@ -76,35 +123,47 @@ enum DeadLine {
 }
 
 // テスト用データ
-final todos = [
+final testTodos = [
   Todo(
       id: '1',
       title: '電動歯ブラシのブラシ交換',
+      duration: NotificationDuration(year: 0, month: 2, week: 0),
+      isRepeated: true,
       dateTodo: DateTime(2023, 1, 12),
       isArchived: false),
   Todo(
       id: '2',
       title: '歯医者(定期検診)',
-      dateTodo: DateTime(2023, 1, 24),
+      duration: NotificationDuration(year: 0, month: 6, week: 0),
+      isRepeated: true,
+      dateTodo: DateTime(2023, 2, 2),
       isArchived: false),
   Todo(
       id: '3',
       title: '魚のフィルター交換',
+      duration: NotificationDuration(year: 0, month: 3, week: 0),
+      isRepeated: true,
       dateTodo: DateTime(2023, 1, 27),
       isArchived: false),
   Todo(
       id: '4',
       title: '冷蔵庫の掃除',
+      duration: NotificationDuration(year: 0, month: 1, week: 0),
+      isRepeated: true,
       dateTodo: DateTime(2023, 3, 16),
       isArchived: false),
   Todo(
       id: '5',
       title: 'PCのファンの掃除',
-      dateTodo: DateTime(2023, 1, 17),
+      duration: NotificationDuration(year: 0, month: 3, week: 0),
+      isRepeated: true,
+      dateTodo: DateTime(2023, 12, 17),
       isArchived: false),
   Todo(
       id: '6',
       title: '電動シェーバーの刃交換',
+      duration: NotificationDuration(year: 2, month: 0, week: 0),
+      isRepeated: true,
       dateTodo: DateTime(2023, 1, 7),
-      isArchived: false)
+      isArchived: true)
 ];

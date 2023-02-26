@@ -3,6 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:roughly_scheduler/model/data/todo/todo.dart';
 
+import '../todo_card/todo_card.dart';
+
 // ignore: slash_for_doc_comments
 /**
  * Todoリスト画面パーツ
@@ -15,7 +17,7 @@ class Todos extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupedListView<Todo, String>(
       padding: const EdgeInsets.all(8.0),
-      elements: todos,
+      elements: testTodos,
       groupBy: (todo) => todo.deadLine.label,
       groupComparator: (deadLineLabel1, deadLineLabel2) {
         final deadLine1 = DeadLine.getDeadLineByLabel(deadLineLabel1);
@@ -72,31 +74,8 @@ class Todos extends StatelessWidget {
                 ),
               ],
             ),
-            child: _TodoCard(todo: todo));
+            child: TodoCard(todo: todo));
       },
-    );
-  }
-}
-
-// ignore: slash_for_doc_comments
-/**
- * Todoリスト1行のパーツ
- *
- */
-class _TodoCard extends StatelessWidget {
-  const _TodoCard({required this.todo});
-  final Todo todo;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: const FlutterLogo(size: 56.0),
-        title: Text(
-          todo.title,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
-      elevation: 4.0,
     );
   }
 }

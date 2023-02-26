@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Todo {
 // id
   String get id => throw _privateConstructorUsedError; // タイトル
-  String get title => throw _privateConstructorUsedError; // メモ(任意)
+  String get title => throw _privateConstructorUsedError; // お知らせ間隔
+  NotificationDuration get duration =>
+      throw _privateConstructorUsedError; // お知らせを繰り返すかどうか
+  bool get isRepeated => throw _privateConstructorUsedError; // メモ(任意)
   String? get memo => throw _privateConstructorUsedError; // todoを実行すべき日付
   DateTime get dateTodo => throw _privateConstructorUsedError; // アーカイブ済みか
   bool get isArchived => throw _privateConstructorUsedError;
@@ -35,6 +38,8 @@ abstract class $TodoCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
+      NotificationDuration duration,
+      bool isRepeated,
       String? memo,
       DateTime dateTodo,
       bool isArchived});
@@ -55,6 +60,8 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
   $Res call({
     Object? id = null,
     Object? title = null,
+    Object? duration = null,
+    Object? isRepeated = null,
     Object? memo = freezed,
     Object? dateTodo = null,
     Object? isArchived = null,
@@ -68,6 +75,14 @@ class _$TodoCopyWithImpl<$Res, $Val extends Todo>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as NotificationDuration,
+      isRepeated: null == isRepeated
+          ? _value.isRepeated
+          : isRepeated // ignore: cast_nullable_to_non_nullable
+              as bool,
       memo: freezed == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
@@ -93,6 +108,8 @@ abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   $Res call(
       {String id,
       String title,
+      NotificationDuration duration,
+      bool isRepeated,
       String? memo,
       DateTime dateTodo,
       bool isArchived});
@@ -109,6 +126,8 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
   $Res call({
     Object? id = null,
     Object? title = null,
+    Object? duration = null,
+    Object? isRepeated = null,
     Object? memo = freezed,
     Object? dateTodo = null,
     Object? isArchived = null,
@@ -122,6 +141,14 @@ class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as NotificationDuration,
+      isRepeated: null == isRepeated
+          ? _value.isRepeated
+          : isRepeated // ignore: cast_nullable_to_non_nullable
+              as bool,
       memo: freezed == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
@@ -144,6 +171,8 @@ class _$_Todo extends _Todo {
   _$_Todo(
       {required this.id,
       required this.title,
+      required this.duration,
+      required this.isRepeated,
       this.memo,
       required this.dateTodo,
       required this.isArchived})
@@ -155,6 +184,12 @@ class _$_Todo extends _Todo {
 // タイトル
   @override
   final String title;
+// お知らせ間隔
+  @override
+  final NotificationDuration duration;
+// お知らせを繰り返すかどうか
+  @override
+  final bool isRepeated;
 // メモ(任意)
   @override
   final String? memo;
@@ -167,7 +202,7 @@ class _$_Todo extends _Todo {
 
   @override
   String toString() {
-    return 'Todo(id: $id, title: $title, memo: $memo, dateTodo: $dateTodo, isArchived: $isArchived)';
+    return 'Todo(id: $id, title: $title, duration: $duration, isRepeated: $isRepeated, memo: $memo, dateTodo: $dateTodo, isArchived: $isArchived)';
   }
 
   @override
@@ -177,6 +212,10 @@ class _$_Todo extends _Todo {
             other is _$_Todo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.isRepeated, isRepeated) ||
+                other.isRepeated == isRepeated) &&
             (identical(other.memo, memo) || other.memo == memo) &&
             (identical(other.dateTodo, dateTodo) ||
                 other.dateTodo == dateTodo) &&
@@ -185,8 +224,8 @@ class _$_Todo extends _Todo {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, memo, dateTodo, isArchived);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, duration, isRepeated, memo, dateTodo, isArchived);
 
   @JsonKey(ignore: true)
   @override
@@ -199,6 +238,8 @@ abstract class _Todo extends Todo {
   factory _Todo(
       {required final String id,
       required final String title,
+      required final NotificationDuration duration,
+      required final bool isRepeated,
       final String? memo,
       required final DateTime dateTodo,
       required final bool isArchived}) = _$_Todo;
@@ -208,6 +249,10 @@ abstract class _Todo extends Todo {
   String get id;
   @override // タイトル
   String get title;
+  @override // お知らせ間隔
+  NotificationDuration get duration;
+  @override // お知らせを繰り返すかどうか
+  bool get isRepeated;
   @override // メモ(任意)
   String? get memo;
   @override // todoを実行すべき日付

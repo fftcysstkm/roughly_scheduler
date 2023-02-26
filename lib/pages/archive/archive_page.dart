@@ -26,7 +26,7 @@ class ArchivePage extends ConsumerWidget {
 
 class _ArchivedTodos extends StatelessWidget {
   _ArchivedTodos();
-  final List<Todo> todos = testTodos;
+  final List<Todo> todos = testTodos.where((todo) => todo.isArchived).toList();
 
   @override
   Widget build(BuildContext context) {

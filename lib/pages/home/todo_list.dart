@@ -17,7 +17,7 @@ class Todos extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupedListView<Todo, String>(
       padding: const EdgeInsets.all(8.0),
-      elements: testTodos,
+      elements: testTodos.where((todo) => !todo.isArchived).toList(),
       groupBy: (todo) => todo.deadLine.label,
       groupComparator: (deadLineLabel1, deadLineLabel2) {
         final deadLine1 = DeadLine.getDeadLineByLabel(deadLineLabel1);

@@ -165,5 +165,12 @@ final testTodos = [
       duration: NotificationDuration(year: 2, month: 0, week: 0),
       isRepeated: true,
       dateTodo: DateTime(2023, 1, 7),
+      isArchived: true),
+  Todo(
+      id: '7',
+      title: '空気清浄機のフィルター交換',
+      duration: NotificationDuration(year: 1, month: 0, week: 0),
+      isRepeated: true,
+      dateTodo: DateTime(2023, 1, 7),
       isArchived: true)
 ];

@@ -44,11 +44,12 @@ class _ToDoDetailState extends State<ToDoDetail> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('タイトル', style: Theme.of(context).textTheme.headline6),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 )),
               ),
               const SizedBox(height: 8, child: Spacer()),
@@ -62,6 +63,9 @@ class _ToDoDetailState extends State<ToDoDetail> {
                         child: SizedBox(
                       height: 60,
                       child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
                           child: Row(
                             children: [
                               // お知らせ間隔のインプット
@@ -175,8 +179,9 @@ class _ToDoDetailState extends State<ToDoDetail> {
                   controller: noteArea,
                   keyboardType: TextInputType.multiline,
                   maxLines: 4,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12))),
                 ),
               ),
               Padding(
@@ -187,7 +192,9 @@ class _ToDoDetailState extends State<ToDoDetail> {
                     ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(90, 50)),
+                            fixedSize: const Size(90, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12))),
                         child:
                             const Text('保存', style: TextStyle(fontSize: 16))),
                   ],

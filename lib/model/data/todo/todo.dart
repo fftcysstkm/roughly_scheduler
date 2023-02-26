@@ -22,7 +22,7 @@ class Todo with _$Todo {
     String? memo,
     // todoを実行すべき日付
     required DateTime dateTodo,
-    // アーカイブ済みか
+    // アーカイブ済みか(このアプリではアーカイブ≒完了済みとする)
     required bool isArchived,
   }) = _Todo;
 

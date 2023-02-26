@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:roughly_scheduler/pages/home/todo_list.dart';
+import 'package:roughly_scheduler/pages/home/todos.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

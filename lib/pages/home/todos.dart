@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:roughly_scheduler/dialog/dialog.dart';
 import 'package:roughly_scheduler/model/data/todo/todo.dart';
+import 'package:roughly_scheduler/model/todos_model.dart';
 
 import 'package:roughly_scheduler/pages/todo_card/todo_card.dart';
 import 'package:roughly_scheduler/pages/todo_detail/todo_detail.dart';
@@ -13,14 +15,17 @@ import 'package:roughly_scheduler/pages/todo_detail/todo_detail.dart';
  * Todoリスト画面パーツ
  *
  */
-class Todos extends StatelessWidget {
+class Todos extends ConsumerWidget {
   const Todos({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // アーカイブされていないTodoリストを取得
+    final todos = ref.watch(filterdTodosProvider(false));
+
     return GroupedListView<Todo, String>(
       padding: const EdgeInsets.all(8.0),
-      elements: testTodos.where((todo) => !todo.isArchived).toList(),
+      elements: todos.where((todo) => !todo.isArchived).toList(),
       groupBy: (todo) => todo.deadLine.label,
       groupComparator: (deadLineLabel1, deadLineLabel2) {
         final deadLine1 = DeadLine.getDeadLineByLabel(deadLineLabel1);

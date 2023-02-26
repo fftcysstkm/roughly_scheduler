@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:roughly_scheduler/dialog/dialog.dart';
 import 'package:roughly_scheduler/model/data/todo/todo.dart';
 
-import '../todo_card/todo_card.dart';
+import 'package:roughly_scheduler/pages/todo_card/todo_card.dart';
+import 'package:roughly_scheduler/pages/todo_detail/todo_detail.dart';
 
 // ignore: slash_for_doc_comments
 /**
@@ -51,23 +54,43 @@ class Todos extends StatelessWidget {
               dismissible: DismissiblePane(onDismissed: () {}),
               dragDismissible: false,
               children: [
-                // アーカイブボタン
-                SlidableAction(
-                  onPressed: (context) {},
-                  backgroundColor: const Color(0xFF7BC043),
-                  foregroundColor: Colors.white,
-                  icon: Icons.archive,
-                ),
                 // 削除ボタン
                 SlidableAction(
-                  onPressed: (context) {},
+                  onPressed: (context) {
+                    dialogBuilder(
+                        context: context,
+                        title: '削除します。',
+                        content: '本当によろしいですか？',
+                        okText: '削除する',
+                        cancelText: 'キャンセル',
+                        okAction: () {},
+                        cancelAction: () {});
+                  },
                   backgroundColor: const Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
                 ),
+                // アーカイブボタン
+                SlidableAction(
+                  onPressed: (context) {
+                    dialogBuilder(
+                        context: context,
+                        title: 'アーカイブします。',
+                        content: 'よろしいですか？',
+                        okText: 'アーカイブする',
+                        cancelText: 'キャンセル',
+                        okAction: () {},
+                        cancelAction: () {});
+                  },
+                  backgroundColor: const Color(0xFF7BC043),
+                  foregroundColor: Colors.white,
+                  icon: Icons.archive,
+                ),
                 // 編集ボタン
                 SlidableAction(
-                  onPressed: (context) {},
+                  onPressed: (context) {
+                    GoRouter.of(context).go('/home/${ToDoDetail.path}');
+                  },
                   backgroundColor: const Color(0xFF0392CF),
                   foregroundColor: Colors.white,
                   icon: Icons.edit,

@@ -25,7 +25,7 @@ class Todos extends ConsumerWidget {
 
     return GroupedListView<Todo, String>(
       padding: const EdgeInsets.all(8.0),
-      elements: todos.where((todo) => !todo.isArchived).toList(),
+      elements: todos,
       groupBy: (todo) => todo.deadLine.label,
       groupComparator: (deadLineLabel1, deadLineLabel2) {
         final deadLine1 = DeadLine.getDeadLineByLabel(deadLineLabel1);

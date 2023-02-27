@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:roughly_scheduler/main.dart';
-import 'package:roughly_scheduler/model/data/todo/todo.dart';
+import 'package:roughly_scheduler/model/todos_model.dart';
 import 'package:roughly_scheduler/pages/todo_card/todo_card.dart';
 
-class ArchivePage extends ConsumerWidget {
+class ArchivePage extends StatelessWidget {
   const ArchivePage({super.key});
 
   static const path = '/archive';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final str = ref.watch(testStrProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Rough Scheduler'),
       ),
-      body: _ArchivedTodos(),
+      body: const _ArchivedTodos(),
     );
   }
 }
 
-class _ArchivedTodos extends StatelessWidget {
-  _ArchivedTodos();
-  final List<Todo> todos = testTodos.where((todo) => todo.isArchived).toList();
+class _ArchivedTodos extends ConsumerWidget {
+  const _ArchivedTodos();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // アーカイブされたTodoリストを取得
+    final todos = ref.watch(filterdTodosProvider(true));
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

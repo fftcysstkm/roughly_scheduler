@@ -5,6 +5,9 @@ import 'package:roughly_scheduler/model/data/todo/todo.dart';
 final allTodosProvider =
     StateNotifierProvider<TodoNotifier, List<Todo>>((ref) => TodoNotifier());
 
+/**
+ * ToDoリストを取得するProvider
+ */
 final filterdTodosProvider = Provider.family((ref, bool isArchivePage) {
   final allTodos = ref.watch(allTodosProvider);
   // アーカイブページの場合はアーカイブ済みのToDoのみを返す
